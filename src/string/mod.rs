@@ -322,6 +322,15 @@ impl<LenT: LenType, const N: usize> String<N, LenT> {
         Ok(unsafe { Self::from_utf8_unchecked(vec) })
     }
 
+    /// documentation
+    #[inline]
+    pub fn from_utf8_old(vec: Vec<u8, N, LenT>) -> Result<Self, Utf8Error> {
+        core::str::from_utf8(&vec)?;
+
+        // SAFETY: UTF-8 invariant has just been checked by `str::from_utf8`.
+        Ok(unsafe { Self::from_utf8_unchecked(vec) })
+    }
+
     /// Convert UTF-8 bytes into a `String`, without checking that the string
     /// contains valid UTF-8.
     ///
